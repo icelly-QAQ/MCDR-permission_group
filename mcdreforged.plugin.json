@@ -1,13 +1,13 @@
 {
-    "id": "fake_op",
+    "id": "permission_group",
     "version": "1.0.0",
-    "name": "Fake_OP",
+    "name": "permission_group",
     "description": {
     "en_us": "More convenient management of player permissions, as well as custom commands!",
     "zh_cn": "更方便的管理玩家的权限，以及自定义命令！"
     },
     "author": "iclly_QAQ",
-    "link": "https://github.com/MCDReforged/MCDReforged-ExamplePlugin",
+    "link": "https://github.com/icelly-QAQ/MCDR-permission_group",
     "dependencies": {
         "mcdreforged": ">=2.0.0-alpha.1"
     }
