@@ -1,14 +1,16 @@
 {
-    "id": "permission_group",
+    "id": "batter_manage",
     "version": "1.0.0",
-    "name": "permission_group",
+    "name": "batter manage",
     "description": {
-    "en_us": "More convenient management of player permissions, as well as custom commands!",
-    "zh_cn": "更方便的管理玩家的权限，以及自定义命令！"
+    "en_us": "More convenient management of players, as well as custom commands!",
+    "zh_cn": "更方便的管理玩家，以及自定义命令！"
     },
     "author": "iclly_QAQ",
     "link": "https://github.com/icelly-QAQ/MCDR-permission_group",
     "dependencies": {
-        "mcdreforged": ">=2.0.0-alpha.1"
+        "mcdreforged": ">=2.0.0-alpha.1",
+        "minecraft_data_api": "*",
+        "online_player_api": "*"
     }
 }
