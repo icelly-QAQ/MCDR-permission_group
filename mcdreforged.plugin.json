@@ -7,7 +7,7 @@
     "zh_cn": "更方便的管理玩家，以及自定义命令！"
     },
     "author": "iclly_QAQ",
-    "link": "https://github.com/icelly-QAQ/MCDR-permission_group",
+    "link": "https://github.com/icelly-QAQ/MCDR-Batter_Manage",
     "dependencies": {
         "mcdreforged": ">=2.0.0-alpha.1",
         "minecraft_data_api": "*",
