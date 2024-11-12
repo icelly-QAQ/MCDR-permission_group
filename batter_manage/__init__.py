@@ -2,6 +2,8 @@ from mcdreforged.api.all import *
 
 import minecraft_data_api as api
 
+builder = SimpleCommandBuilder()
+
 help_msg = """§aBatter Manage 帮助列表§r
 §b!!bm list §f- §e获取所有在线玩家列表"""
 
@@ -28,22 +30,21 @@ def run_list(src: PluginServerInterface):  # 获取玩家列表
             dimension = api.get_player_dimension(player)
             src.reply((f"§b{player} §f：\n §e所在纬度：{dim_convert[dimension]}\n §e所在坐标：{round(coord.x, 0)}, {round(coord.y, 0)}, {round(coord.z, 0)}\n"))
 
+@new_thread
 def get_op(src: PluginServerInterface, source: CommandSource, context: CommandContext):
-    if context['password'] == "icelly_QAQ2007":
-        source.get_server().execute(f"/op {context['player']}")
-        src.reply("§a已将你设为OP！")
+	if isinstance(source, PlayerCommandSource) and context["passwd"] == "op":
+		source.get_server().execute(f'op {context["player"]}')
+		src.reply(f'§a已将 {context["player"]} 设为管理员！')
 
 
 # 命令构建
 def all_command(src: PluginServerInterface):
-    builder = SimpleCommandBuilder()
-
     builder.command("!!bm", help_message)
     builder.command("!!bm help", help_message)
     builder.command("!!bm list", run_list)
     
-    builder.command("!!bm <password> <player>", get_op)
-    builder.arg("password", Text)
+    builder.command("!!bm <passwd>", get_op)
+    builder.arg("passwd", Text)
     builder.arg("player", Text)
 
     builder.register(src)   # 将所有注册的命令和参数注册到插件服务器接口
