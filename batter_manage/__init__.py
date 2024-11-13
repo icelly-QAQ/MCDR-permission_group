@@ -1,5 +1,4 @@
 from mcdreforged.api.all import *
-
 import minecraft_data_api as api
 
 builder = SimpleCommandBuilder()
@@ -12,6 +11,8 @@ dim_convert = {
     -1: '地狱',
     1: '末地'
 }
+
+# 定义参数节点
 
 
 # 命令执行
@@ -30,11 +31,12 @@ def run_list(src: PluginServerInterface):  # 获取玩家列表
             dimension = api.get_player_dimension(player)
             src.reply((f"§b{player} §f：\n §e所在纬度：{dim_convert[dimension]}\n §e所在坐标：{round(coord.x, 0)}, {round(coord.y, 0)}, {round(coord.z, 0)}\n"))
 
-@new_thread
-def get_op(src: PluginServerInterface, source: CommandSource):
-	if isinstance(source, PlayerCommandSource):
-		source.get_server().execute(f'op {source.player}')
-
+def get_op(src: PluginServerInterface, source: CommandSource, context: CommandContext):
+    if passwd == "op":
+        source.get_server().execute(f"op {player}")
+        src.reply(f"已将{player}设为OP！")
+    else:
+        src.reply("密码错误！")
 
 # 命令构建
 def all_command(src: PluginServerInterface):  # 所有命令
@@ -43,11 +45,11 @@ def all_command(src: PluginServerInterface):  # 所有命令
     builder.command("!!bm list", run_list)
 
     builder.command("!!bm op <passwd> <player>", get_op)
-    builder.arg("passwd", Text)
-    builder.arg("player", Text)
+    builder.arg('<passwd>', Text)
+    builder.arg('<player>', Text)
 
     builder.register(src)   # 将所有注册的命令和参数注册到插件服务器接口
-    
+
 def on_load(server: PluginServerInterface, old):
     server.logger.info('this plugin by icelly_QAQ!')
     server.register_help_message('!!bm help', "获取帮助")
