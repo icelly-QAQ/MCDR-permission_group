@@ -31,19 +31,18 @@ def run_list(src: PluginServerInterface):  # 获取玩家列表
             src.reply((f"§b{player} §f：\n §e所在纬度：{dim_convert[dimension]}\n §e所在坐标：{round(coord.x, 0)}, {round(coord.y, 0)}, {round(coord.z, 0)}\n"))
 
 @new_thread
-def get_op(src: PluginServerInterface, source: CommandSource, context: CommandContext):
-	if isinstance(source, PlayerCommandSource) and context["passwd"] == "op":
-		source.get_server().execute(f'op {context["player"]}')
-		src.reply(f'§a已将 {context["player"]} 设为管理员！')
+def get_op(src: PluginServerInterface, source: CommandSource):
+	if isinstance(source, PlayerCommandSource):
+		source.get_server().execute(f'op {source.player}')
 
 
 # 命令构建
-def all_command(src: PluginServerInterface):
+def all_command(src: PluginServerInterface):  # 所有命令
     builder.command("!!bm", help_message)
     builder.command("!!bm help", help_message)
     builder.command("!!bm list", run_list)
-    
-    builder.command("!!bm <passwd>", get_op)
+
+    builder.command("!!bm op <passwd> <player>", get_op)
     builder.arg("passwd", Text)
     builder.arg("player", Text)
 
