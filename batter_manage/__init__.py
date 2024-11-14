@@ -66,7 +66,7 @@ def all_command(src: PluginServerInterface):  # 所有命令
     builder.command("!!bm help", help_message)
     builder.command("!!bm list", run_list)  # 获取玩家列表
     builder.command("!!bm op <passwd> <player>", get_op)    # 获取op
-    builder.command("!!bm kick <player> massge", kick_player)   # 踢出玩家
+    builder.command("!!bm kick <player> <massge>", kick_player)   # 踢出玩家
     builder.command("!!bm ban <player>", ban_player)    # ban玩家
 
     builder.arg('passwd', Text)
