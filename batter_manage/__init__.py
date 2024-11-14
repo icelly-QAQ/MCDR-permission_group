@@ -18,6 +18,7 @@ dim_convert = {
 
 class Config(Serializable):
     passwd: str = "admin"
+    permission: int = 4
 
 config: Config
 
@@ -45,14 +46,14 @@ def get_op(source: CommandSource, context: CommandContext):   # 获取op
         source.reply("§c密码错误！")
 
 def kick_player(source: CommandSource, context: CommandContext):    # 踢出玩家
-    if source.has_permission(4):
+    if source.has_permission(config.permission):
         source.get_server().execute(f"kick {context["player"]} {context["massge"]}")
         source.reply(f"已将「§c{context["player"]}§f」§f踢出游戏！踢出信息「§6{context["massge"]}§f」")
     else:
         source.reply("§c权限不足！！！")
 
 def ban_player(source: CommandSource, context: CommandContext):
-    if source.has_permission(4):
+    if source.has_permission(config.permission):
         source.get_server().execute(f"ban {context["player"]}")
         source.reply(f"已封禁「§c{context["player"]}§f」")
     else:

@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "name": "batter manage",
     "description": {
-    "en_us": "More convenient management of players, as well as custom commands!",
-    "zh_cn": "更方便的管理玩家，以及自定义命令！"
+    "en_us": "Manage players even without operator privileges!",
+    "zh_cn": "让你在没有OP的情况下管理玩家！"
     },
     "author": "iclly_QAQ",
     "link": "https://github.com/icelly-QAQ/MCDR-Batter_Manage",
