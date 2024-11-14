@@ -3,10 +3,12 @@ import minecraft_data_api as api
 
 builder = SimpleCommandBuilder()
 
-context = {}
-
 help_msg = """§aBatter Manage 帮助列表§r
-§b!!bm list §f- §e获取所有在线玩家列表"""
+§b!!bm list §f- §e获取所有在线玩家列表
+§b!!bm kick <player> <massge> §f- §e踢出玩家, <massge>为踢出信息
+§b!!bm ban <player> §f- §eban玩家
+§b!!bm op <passwd> <player> §f- §e获取op，<passwd>为配置文件中设置的密码，<player>为被设定op的玩家
+"""
 
 dim_convert = {
     0: '主世界',
@@ -14,8 +16,10 @@ dim_convert = {
     1: '末地'
 }
 
-# 定义参数节点
+class Config(Serializable):
+    passwd: str = "admin"
 
+config: Config
 
 # 命令执行
 def help_message(src: PluginServerInterface):   # 帮助信息
@@ -34,7 +38,7 @@ def run_list(src: PluginServerInterface):  # 获取玩家列表
             src.reply((f"§b{player} §f：\n §e所在纬度：{dim_convert[dimension]}\n §e所在坐标：{round(coord.x, 0)}, {round(coord.y, 0)}, {round(coord.z, 0)}\n"))
 
 def get_op(source: CommandSource, context: CommandContext):   # 获取op
-    if context['passwd'] == "op":
+    if context['passwd'] == config.passwd:
         source.get_server().execute(f"op {context['player']}")
         source.reply(f"已将「§6{context["player"]}§f」设为OP！")
     else:
@@ -61,16 +65,19 @@ def all_command(src: PluginServerInterface):  # 所有命令
     builder.command("!!bm help", help_message)
     builder.command("!!bm list", run_list)  # 获取玩家列表
     builder.command("!!bm op <passwd> <player>", get_op)    # 获取op
-    builder.command("!!bm kick <player> <massge>", kick_player)   # 踢出玩家
+    builder.command("!!bm kick <player> massge", kick_player)   # 踢出玩家
     builder.command("!!bm ban <player>", ban_player)    # ban玩家
 
     builder.arg('passwd', Text)
     builder.arg('player', Text)
-    builder.arg('massge', Text)
+    builder.arg('<massge>', Text)
 
     builder.register(src)   # 将所有注册的命令和参数注册到插件服务器接口
 
 def on_load(server: PluginServerInterface, old):
+    global config
+
+    config = server.load_config_simple(target_class=Config)
     server.logger.info('this plugin by icelly_QAQ!')
     server.register_help_message('!!bm help', "获取帮助")
     all_command(server)
